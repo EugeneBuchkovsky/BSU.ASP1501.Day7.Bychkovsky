@@ -15,7 +15,7 @@ namespace Task3.Test
 
             int expectedResult = 4;
 
-            Assert.AreEqual(expectedResult, array.BinarySearch<int>(item, null));
+            Assert.AreEqual(expectedResult, array.BinarySearch<int>(item));
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace Task3.Test
 
             int expectedResult = 2;
 
-            Assert.AreEqual(expectedResult, array.BinarySearch<string>(item, null));
+            Assert.AreEqual(expectedResult, array.BinarySearch<string>(item));
         }
     }
 }

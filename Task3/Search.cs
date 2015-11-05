@@ -8,6 +8,14 @@ namespace Task3
 {
     public static class Search
     {
+
+        public static int BinarySearch<T>(this T[] source, T item)
+        {
+            if (item == null)
+                throw new ArgumentNullException();
+            IComparer<T> comparer = Comparer<T>.Default;
+            return source.BinarySearch<T>(item, comparer);
+        }
         /// <summary>
         /// method of binary search.
         /// </summary>
@@ -40,6 +48,8 @@ namespace Task3
 
         public static int BinarySearch<T>(this T[] source, T item, Comparison<T> comparer)
         {
+            if (comparer == null)
+                return source.BinarySearch<T>(item);
             return source.BinarySearch<T>(item, Comparer<T>.Create(comparer));
         }
     }
