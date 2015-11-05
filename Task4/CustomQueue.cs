@@ -9,7 +9,8 @@ namespace Task4
 {
     public class CustomQueue<T> : IEnumerable<T>
     {
-        private readonly T[] values;
+        private T[] values;
+        private int head, tail, size, capacity, defaultCapacity;
 
         public int Count {get {return values.Length; }}
 
@@ -23,10 +24,21 @@ namespace Task4
         {
             if (array != null)
             {
-                values = new T[array.Length];
+                //values = new T[array.Length];
                 values = (T[])array.Clone();
+                this.defaultCapacity = array.Length + 10;
+                this.tail = values.Length - 1;
+                this.size = values.Length;
             }
-            values = new T[0];
+            else
+            {
+                values = new T[0];
+                this.defaultCapacity = 10;
+                this.tail = 0;
+                this.size = 0;
+            }
+            this.capacity = defaultCapacity;
+            this.head = 0;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -76,6 +88,38 @@ namespace Task4
             {
                 pointer = -1;
             }
+        }
+
+ 
+
+        public T Peek()
+        {
+            if (Count > 0)
+                return values[0];
+            throw new InvalidOperationException("Queue is empty.");
+        }
+
+        public void Enqueue(T newElement)
+        {
+            if (this.size == this.capacity)
+            {
+                T[] newQueue = new T[2 * capacity];
+                Array.Copy(values, 0, newQueue, 0, values.Length);
+                values = newQueue;
+                capacity *= 2;
+            }
+            size++;
+            values[tail++ % capacity] = newElement;
+        }
+
+        public T Dequeue()
+        {
+            if (this.size == 0)
+            {
+                throw new InvalidOperationException();
+            }
+            size--;
+            return values[++head % capacity];
         }
 
     }
